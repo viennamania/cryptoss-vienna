@@ -68,7 +68,8 @@ import { add } from 'thirdweb/extensions/farcaster/keyGateway';
 import { useSearchParams } from "next/navigation";
 import { parse } from 'path';
 
-
+// next/script
+import Script from 'next/script';
 
 
 
@@ -2323,12 +2324,8 @@ export default function Index({ params }: any) {
 
         w-full flex flex-col gap-2 justify-center items-center
         p-4
-        bg-gradient-to-r from-[#f9a8d4] to-[#f472b6]
-        rounded-b-2xl
-        shadow-lg
-        shadow-[#f472b6]
-        border-b-2 border-[#f472b6]
-        border-opacity-50
+        bg-zinc-900
+        text-zinc-100
         ">
 
         {loadingStoreInfo ? (
@@ -2353,7 +2350,9 @@ export default function Index({ params }: any) {
                 alt="Store Logo"
                 width={38}
                 height={38}
-                className='rounded-full w-10 h-10'
+                className='rounded-full w-10 h-10
+                bg-zinc-100
+                '
               />
               {/* storeName */}
               {/*
@@ -2445,26 +2444,17 @@ export default function Index({ params }: any) {
       </div>
 
 
+      {/*
+      include coinmarketcap widget
+      <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currencyid="825" data-base="KRW" data-secondary="" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-statsticker="true" data-stats="USD"></div>
+      */}
 
 
-      {/* USDT 가격 binance market price */}
-      <div
-        className="binance-widget-marquee
-        w-full flex flex-row items-center justify-center gap-2
-        p-2
-        "
+        <Script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></Script>
 
-
-        data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
-        data-theme="dark"
-        data-transparent="true"
-        data-locale="ko"
-        data-fiat="KRW"
-        //data-powered-by="Powered by CrypToss"
-        //data-disclaimer="Disclaimer"
-      ></div>
-
-
+      <div className='w-full mt-5 flex flex-row items-center justify-center'>
+        <div className="coinmarketcap-currency-widget" data-currencyid="825" data-base="KRW" data-secondary="" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-statsticker="true" data-stats="USD"></div>
+      </div>
 
       <div className="
         mt-5
@@ -2987,11 +2977,11 @@ export default function Index({ params }: any) {
                             <button
                               disabled={!address || !user || !selectedKrwAmount || acceptingSellOrderRandom}
                               className={`
-                              ${!user || !selectedKrwAmount || acceptingSellOrderRandom ? 'bg-zinc-200' : 'bg-[#f472b6]'
-                              }
+                              ${!user || !selectedKrwAmount || acceptingSellOrderRandom ? 'bg-zinc-200' : 'bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-50'}
                                 w-full
-                                text-lg text-zinc-50 px-4 py-2 rounded-md border border-zinc-100
-                                hover:bg-[#f472b6] hover:text-zinc-50
+                                text-lg
+                                font-semibold
+                                px-4 py-2 rounded-md border border-zinc-100
                                 `}
 
                               onClick={() => {
@@ -3033,15 +3023,12 @@ export default function Index({ params }: any) {
                               
                                 <div className="flex flex-row items-center justify-center gap-2">
                                   {acceptingSellOrderRandom ? (
-                                    <span className="text-sm text-zinc-800">
+                                    <span className="text-sm text-zinc-400">
                                       {/* 구매주문 중입니다. */}
                                       구매주문 중입니다.
                                     </span>
                                   ) : (
-                                    <span className="text-sm text-zinc-800
-                                      hover:underline
-                                      hover:text-zinc-50
-                                      ">
+                                    <span className="text-sm text-zinc-100">
                                       구매하기
                                     </span>
                                   )}

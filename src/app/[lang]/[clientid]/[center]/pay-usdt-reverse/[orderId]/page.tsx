@@ -1636,14 +1636,9 @@ export default function Index({ params }: any) {
 
         w-full flex flex-col gap-2 justify-center items-center
         p-4
-        bg-gradient-to-r from-[#f9a8d4] to-[#f472b6]
-        rounded-b-2xl
-        shadow-lg
-        shadow-[#f472b6]
-        border-b-2 border-[#f472b6]
-        border-opacity-50
+        bg-zinc-900
+        text-zinc-100
         ">
-
 
           <div className="w-full flex flex-row items-center justify-between gap-2">
 
@@ -1671,7 +1666,9 @@ export default function Index({ params }: any) {
                     height={38}
                     className='
                     w-10 h-10
-                      rounded-full'
+                      rounded-full
+                      bg-zinc-100
+                    '
                   />
                   <span className="text-sm text-zinc-100 font-semibold">
                     {storeInfo?.storeName}
@@ -1755,24 +1752,6 @@ export default function Index({ params }: any) {
 
       </div>
 
-
-
-      {/* USDT 가격 binance market price */}
-      <div
-        className="binance-widget-marquee
-        w-full flex flex-row items-center justify-center gap-2
-        p-2
-        "
-
-
-        data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
-        data-theme="dark"
-        data-transparent="true"
-        data-locale="ko"
-        data-fiat="KRW"
-        //data-powered-by="Powered by ISKAN"
-        //data-disclaimer="Disclaimer"
-      ></div>
 
 
       <div className="

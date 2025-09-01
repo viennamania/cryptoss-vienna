@@ -21,11 +21,6 @@ export async function POST(request: NextRequest) {
 
 
   const stableUrl = clientid === "9ed089930921bfaa1bf65aff9a75fc41" ? stableUrl1
-    : clientid === "e44dd15d66fc317d1cc7e3f71975373d" ? stableUrl2
-    : clientid === "421a733ddd491ddc0c2a7a8c4040d782" ? stableUrl3
-    : clientid === "213e1813510d42bf66a4136dcc90b032" ? stableUrl4
-    : clientid === "150b53f165222304af7c45dc45c73863" ? stableUrl5
-    : clientid === "48c74c35d9afd606ea0329c61898fa00" ? stableUrl6
     : stableUrl1; // default to stableUrl1 if no match
     
   // call api

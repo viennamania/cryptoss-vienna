@@ -1770,7 +1770,7 @@ export default function Index({ params }: any) {
         data-transparent="true"
         data-locale="ko"
         data-fiat="KRW"
-        //data-powered-by="Powered by Vienna Mania"
+        //data-powered-by="Powered by ISKAN"
         //data-disclaimer="Disclaimer"
       ></div>
 

@@ -1951,7 +1951,7 @@ export default function Index({ params }: any) {
                                 height={24}
                               />
                               <Image
-                                src="/best-seller.png"
+                                src="/icon-best-seller.png"
                                 alt="Best Seller"
                                 width={24}
                                 height={24}
@@ -2384,7 +2384,7 @@ export default function Index({ params }: any) {
                                   />
 
                                   <Image
-                                    src='/best-seller.png'
+                                    src='/icon-best-seller.png'
                                     alt='Best Seller'
                                     width={24}
                                     height={24}
@@ -2468,17 +2468,22 @@ export default function Index({ params }: any) {
                                 <div className='flex flex-row items-center gap-2'>
 
                                   <Image
-                                      src="/best-seller.png"
+                                      src="/icon-best-seller.png"
                                       alt="Best Seller"
-                                      width={32}
-                                      height={32}
+                                      width={50}
+                                      height={50}
                                   />
 
-                                  <span className="text-lg font-semibold">
-                                      판매자: {
-                                          item?.seller?.nickname ? item?.seller?.nickname : Anonymous
-                                      }
-                                  </span>
+                                  <div className="flex flex-row items-center gap-2">
+                                    <span className="text-lg text-zinc-500">
+                                      판매자 회원아이디: 
+                                    </span>
+                                    <span className="text-lg font-semibold text-blue-500">
+                                        {
+                                            item?.seller?.nickname ? item?.seller?.nickname : Anonymous
+                                        }
+                                    </span>
+                                  </div>
 
                                   <Image
                                       src="/verified.png"
@@ -2516,10 +2521,22 @@ export default function Index({ params }: any) {
                                   <div className=" flex flex-col items-start justify-start
                                   bg-white px-2 py-3 rounded-md  border border-zinc-100
                                   ">
+                                    <Image
+                                      src="/icon-trade.png"
+                                      alt="Trade Icon"
+                                      width={24}
+                                      height={24}
+                                      className="mr-2 animate-spin"
+                                    />
 
-                                    <p className=" text-xl font-semibold text-[#f472b6] ">
-                                      거래번호:{' '}#{item.tradeId}
-                                    </p>
+                                    <div className="flex flex-row items-center gap-2">
+                                      <span className=" text-lg text-zinc-500">
+                                        거래번호:
+                                      </span>
+                                      <span className=" text-xl font-semibold text-zinc-900">
+                                        #{item.tradeId}
+                                      </span>
+                                    </div>
 
 
 
@@ -2578,12 +2595,25 @@ export default function Index({ params }: any) {
 
                                 { (item.status === 'accepted' || item.status === 'paymentRequested' || item.status === 'paymentConfirmed') && (
 
-                                  <div className='w-full flex flex-row items-center justify-between
+                                  <div className='w-full flex flex-row items-center justify-start
                                     gap-2 bg-white px-2 py-3 rounded-md'>
 
-                                    <p className=" text-xl font-semibold text-[#f472b6] ">
-                                      거래번호:{' '}#{item.tradeId}
-                                    </p>
+                                    <Image
+                                      src="/icon-trade.png"
+                                      alt="Trade Icon"
+                                      width={24}
+                                      height={24}
+                                      className="mr-2 animate-spin"
+                                    />
+
+                                    <div className="flex flex-row items-center gap-2">
+                                      <span className=" text-lg text-zinc-500">
+                                        거래번호:
+                                      </span>
+                                      <span className=" text-xl font-semibold text-zinc-900">
+                                        #{item.tradeId}
+                                      </span>
+                                    </div>
 
                                     {item.status === 'paymentConfirmed' && (
 
@@ -2824,32 +2854,57 @@ export default function Index({ params }: any) {
                                 <div className="mt-4 flex flex-col items-start gap-2 p-2">
 
 
-                                  <p className="text-lg text-zinc-500">
-                                    구매금액:{' '}
-                                    {
-                                      // currency
-                                    
-                                      Number(item.krwAmount)?.toLocaleString() + ' 원'
-                                      
-
-                                    }
-                                  </p>
-
-
-                                  
                                   <div className="mt-2 flex flex-row items-center justify-between gap-2">
 
+                                    <div className="flex flex-row items-center gap-2">
+                                      <span className="text-lg text-zinc-500 w-24">
+                                        구매량:
+                                      </span>
+                                      <span className="text-4xl font-semibold text-zinc-900"
+                                        style={{
+                                          fontFamily: 'monospace'
+                                        }}
+                                      >
+                                        {item.usdtAmount.toFixed(3).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                      </span>
+                                      <span className="text-lg text-zinc-500">
+                                        USDT
+                                      </span>
+                                    </div>
 
-                                    <p className="text-lg text-zinc-500">
-                                      구매량:{' '}{item.usdtAmount}{' '}USDT
-                                    </p>
                                     <p className="text-sm text-zinc-500">
                                       환율:{' '}{
-
-                                      Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                        Number(item.krwAmount / item.usdtAmount).toFixed(2)
 
                                     }</p>
                                   </div>
+
+                                  <div className="flex flex-row items-center gap-2">
+                                    <span className="text-lg text-zinc-500 w-24">
+                                      구매금액:
+                                    </span>
+                                    <span className="text-4xl font-semibold text-zinc-900"
+                                    style={{
+                                      fontFamily: 'monospace'
+                                    }}
+                                    >
+                                      {
+                                        // currency
+                                      
+                                        Number(item.krwAmount)?.toLocaleString()
+                                        
+
+                                      }
+                                    </span>
+                                    <span className="text-lg text-zinc-500">
+                                      원
+                                    </span>
+
+                                  </div>
+
+
+                                  
+
                                   
 
 

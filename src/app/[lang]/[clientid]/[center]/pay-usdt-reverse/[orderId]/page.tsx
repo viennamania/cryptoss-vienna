@@ -3552,7 +3552,7 @@ export default function Index({ params }: any) {
                 </a>
               </div>
               <div className="text-sm text-zinc-500 mt-2">
-                © 2023 Iskan9. All rights reserved.
+                © 2023 GoodPay. All rights reserved.
               </div>
 
             </div>
@@ -3603,7 +3603,7 @@ const TradeDetail = (
       <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
         <div className="flex items-center">
           <span className="inline-block w-4 h-4 rounded-full bg-green-500 mr-2"></span>
-          <h2 className="text-lg font-semibold text-black ">Iskan9</h2>
+          <h2 className="text-lg font-semibold text-black ">GoodPay</h2>
           <span className="ml-2 text-blue-500 text-sm">318 trades</span>
         </div>
         <p className="text-gray-600 mt-2">The offer is taken from another source. You can only use chat if the trade is open.</p>

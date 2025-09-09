@@ -647,10 +647,10 @@ export async function cancelTradeByAdmin() {
   const collection = client.db('ultraman').collection('orders');
 
   // status is 'accepted'
-  // acceptedAt is more than 1 hour ago
+  // acceptedAt is more than 10 minutes ago
 
   const result = await collection.updateMany(
-    { status: 'accepted', acceptedAt: { $lt: new Date(Date.now() - 60 * 60 * 1000).toISOString() } },
+    { status: 'accepted', acceptedAt: { $lt: new Date(Date.now() - 10 * 60 * 1000).toISOString() } },
     { $set: {
       status: 'cancelled',
       cancelledAt: new Date().toISOString(),

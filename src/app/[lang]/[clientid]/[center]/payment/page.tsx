@@ -2204,6 +2204,8 @@ export default function Index({ params }: any) {
   }, [address, params.center]);
 
 
+  // check user agreement
+  const [userAgreementChecked, setUserAgreementChecked] = useState(false);
 
 
 
@@ -2649,7 +2651,48 @@ export default function Index({ params }: any) {
                   </div>
                   */}
 
-        
+
+
+                  {/*
+                  입금은 반드시 회원가입 시 등록하신 계좌로만 가능합니다.
+                  거래 상대방에게 고의적인 피해나 불이익이 발생할 경우, 관련 법령에 의거하여 민형사상 고발 조치가 진행될 수 있습니다. 상호 신뢰를 바탕으로 한 투명한 거래를 부탁드립니다
+
+                  위. 내용을 확인하였습니다 ▪️(체크)
+                  */}
+
+                  <div className='w-full flex flex-col gap-2 items-center justify-start mb-4'>
+
+                    <div className='flex flex-row gap-2 items-center justify-start'>
+                      <Image
+                        src="/icon-info.png"
+                        alt="Info"
+                        width={20}
+                        height={20}
+                        className="w-6 h-6"
+                      />
+                      <span className="text-lg text-zinc-500">
+                        입금은 반드시 회원가입 시 등록하신 계좌로만 가능합니다.
+                        <br />
+                        거래 상대방에게 고의적인 피해나 불이익이 발생할 경우, 관련 법령에 의거하여 민형사상 고발 조치가 진행될 수 있습니다.
+                        <br />
+                        상호 신뢰를 바탕으로 한 투명한 거래를 부탁드립니다.
+                      </span>
+                    </div>
+                    <div className='flex flex-row gap-2 items-center justify-start'>
+                      <span className="text-lg text-zinc-500 font-semibold">
+                        위 내용을 확인하였으면 체크해주세요.
+                      </span>
+                      <input
+                        // size large
+                        style={{ width: '20px', height: '20px' }}
+                        type="checkbox"
+                        checked={userAgreementChecked}
+                        onChange={(e) => setUserAgreementChecked(e.target.checked)}
+                      />
+                    </div>
+
+                  </div>
+  
 
 
                   {/* select one of krw amounts combo box */}
@@ -2711,7 +2754,7 @@ export default function Index({ params }: any) {
                                 className="rounded-full w-6 h-6"
                               />
 
-                              <div className="text-2xl font-semibold text-zinc-500">
+                              <div className="text-4xl font-semibold text-zinc-500">
                                 {
                                   (selectedKrwAmount / rate)?.toLocaleString('us-US', {
                                     minimumFractionDigits: 2,
@@ -2975,9 +3018,9 @@ export default function Index({ params }: any) {
 
 
                             <button
-                              disabled={!address || !user || !selectedKrwAmount || acceptingSellOrderRandom}
+                              disabled={!address || !user || !selectedKrwAmount || acceptingSellOrderRandom || !userAgreementChecked}
                               className={`
-                              ${!user || !selectedKrwAmount || acceptingSellOrderRandom ? 'bg-zinc-200' : 'bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-50'}
+                              ${!user || !selectedKrwAmount || acceptingSellOrderRandom || !userAgreementChecked ? 'bg-zinc-200' : 'bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-50'}
                                 w-full
                                 text-lg
                                 font-semibold
@@ -3040,7 +3083,7 @@ export default function Index({ params }: any) {
 
                           </div>
 
-
+                          {/*
                           <div className='
                             mt-2 w-full flex flex-row items-center justify-start gap-2
                             '>
@@ -3054,6 +3097,7 @@ export default function Index({ params }: any) {
                               입금 시 반드시 사전 등록한 은행과 이름, 계좌번호로 송금해야 합니다. 이와 다를 시에는 입금 처리가 안될 수 있습니다.
                             </span>
                           </div>
+                          */}
 
                         </div>
 

@@ -2670,7 +2670,7 @@ export default function Index({ params }: any) {
                         height={20}
                         className="w-6 h-6"
                       />
-                      <span className="text-lg text-zinc-500">
+                      <span className="text-lg text-red-500 font-semibold">
                         입금은 반드시 회원가입 시 등록하신 계좌로만 가능합니다.
                         <br />
                         거래 상대방에게 고의적인 피해나 불이익이 발생할 경우, 관련 법령에 의거하여 민형사상 고발 조치가 진행될 수 있습니다.
@@ -2679,6 +2679,13 @@ export default function Index({ params }: any) {
                       </span>
                     </div>
                     <div className='flex flex-row gap-2 items-center justify-start'>
+                      <Image
+                        src="/icon-check.png"
+                        alt="Check"
+                        width={20}
+                        height={20}
+                        className="w-6 h-6"
+                      />
                       <span className="text-lg text-zinc-500 font-semibold">
                         위 내용을 확인하였으면 체크해주세요.
                       </span>

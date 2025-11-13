@@ -1705,7 +1705,7 @@ export default function Index({ params }: any) {
             storecode: params.center,
             
             userCode: memberid,
-            password: userPassword,
+            userPassword: userPassword,
             mobile: mobile,
   
             userName: depositName,

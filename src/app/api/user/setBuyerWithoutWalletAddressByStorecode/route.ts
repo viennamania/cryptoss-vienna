@@ -19,11 +19,15 @@ export async function POST(request: NextRequest) {
     storecode,
     walletAddress,
     userCode,
+    password,
     userName,
     userBankName,
     userBankAccountNumber,
     userType,
   } = body;
+
+
+  console.log("setBuyerWithoutWalletAddressByStorecode request body:", body);
 
   
   const stableUrl = clientid === "213e1813510d42bf66a4136dcc90b032" ? stableUrl1
@@ -48,6 +52,7 @@ export async function POST(request: NextRequest) {
         storecode,
         walletAddress,
         userCode,
+        password,
         userName,
         userBankName,
         userBankAccountNumber,
@@ -57,7 +62,7 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     
-    console.log("API response:", data);
+    //console.log("API response:", data);
 
 
     return NextResponse.json(data);

@@ -1602,62 +1602,6 @@ export default function Index({ params }: any) {
   } , []);
 
 
-
-
-  if (orderId !== '0') {
-      
-      return (
-        <div>
-          Order not found
-        </div>
-      );
-
-    }
-
-
-    /*
-  if (orderId === '0' && !storeUser) {
-    return (
-      <div>
-        Store user not found
-      </div>
-    );
-  }
-    */
-
-
-  /*
-  if (orderId === '0' && storeCodeNumber && storecode !== storeCodeNumber) {
-    return (
-      <div>
-        Store code is invalid
-      </div>
-    );
-  }
-    */
-  
-    /*
-  if (orderId === '0' && !paramDepositName) {
-    return (
-      <div>
-        Deposit name is invalid
-      </div>
-    );
-  }
-    */
-   /*
-  if (orderId === '0' && !paramDepositBankName) {
-    return (
-      <div>
-        Deposit bank name is invalid
-      </div>
-    );
-  }
-    */
-
-
-
-  
   const userLogin = async () => {
     if (!memberid) {
       toast.error('회원아이디를 입력해주세요');
@@ -1728,6 +1672,65 @@ export default function Index({ params }: any) {
 
     }
   }
+
+
+
+
+
+  if (orderId !== '0') {
+      
+      return (
+        <div>
+          Order not found
+        </div>
+      );
+
+    }
+
+
+    /*
+  if (orderId === '0' && !storeUser) {
+    return (
+      <div>
+        Store user not found
+      </div>
+    );
+  }
+    */
+
+
+  /*
+  if (orderId === '0' && storeCodeNumber && storecode !== storeCodeNumber) {
+    return (
+      <div>
+        Store code is invalid
+      </div>
+    );
+  }
+    */
+  
+    /*
+  if (orderId === '0' && !paramDepositName) {
+    return (
+      <div>
+        Deposit name is invalid
+      </div>
+    );
+  }
+    */
+   /*
+  if (orderId === '0' && !paramDepositBankName) {
+    return (
+      <div>
+        Deposit bank name is invalid
+      </div>
+    );
+  }
+    */
+
+
+
+  
 
     
   return (

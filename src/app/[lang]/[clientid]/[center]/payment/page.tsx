@@ -991,7 +991,7 @@ export default function Index({ params }: any) {
     
         const data = await response?.json();
     
-        console.log('setBuyerWithoutWalletAddressByStorecode data', data);
+        //console.log('setBuyerWithoutWalletAddressByStorecode data', data);
   
         if (!data.walletAddress) {
           setLoadingUser(false);
@@ -1880,7 +1880,7 @@ export default function Index({ params }: any) {
 
 
   // api setUserWithoutWalletAddress
-
+  /*
   const setUserWithoutWalletAddress = async () => {
 
     ///////const nickname = prompt('Enter your nickname');
@@ -1922,27 +1922,6 @@ export default function Index({ params }: any) {
       setAddress(data.walletAddress);
 
 
-      /*
-      await fetch('/api/user/getUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          walletAddress: data.result.walletAddress,
-        }),
-      })
-      .then(response => response?.json())
-      .then(data => {
-          console.log('data=======', data);
-          setUser(data.result);
-      })
-      .catch((error) => {
-          console.error('Error:', error);
-      });
-      */
-
-
 
     } else {
       toast.error('User registration has been failed');
@@ -1950,6 +1929,7 @@ export default function Index({ params }: any) {
 
 
   }
+  */
 
 
   const [acceptingSellOrderRandom, setAcceptingSellOrderRandom] = useState(false);

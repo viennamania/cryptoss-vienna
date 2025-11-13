@@ -676,7 +676,7 @@ export default function Index({ params }: any) {
 
 
     // userLogin
-    const [userLogining, setUserLogin] = useState(false);
+    //const [userLogining, setUserLogin] = useState(false);
 
 
  
@@ -1604,6 +1604,150 @@ export default function Index({ params }: any) {
 
 
 
+
+  /*
+  const userLogin = async () => {
+    if (!memberid) {
+      toast.error('회원아이디를 입력해주세요');
+      return;
+    }
+    if (!userPassword) {
+      toast.error('비밀번호를 입력해주세요');
+      return;
+    }
+    const mobile = '010-1234-5678';
+
+    try {
+      setUserLogin(true);
+      const response = await fetch('/api/user/userLogin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          storecode: storecode,
+          nickname: nickname,
+          mobile: mobile,
+          password: userPassword,
+        }),
+      });
+      const data = await response?.json();
+      console.log('userLogin data', data);
+      if (data.walletAddress) {
+        setAddress(data.walletAddress);
+
+        toast.success('로그인 성공');
+      } else {
+        toast.error('로그인 실패');
+      }
+    } catch (error) {
+      console.error('userLogin error', error);
+      toast.error('로그인 실패');
+    } finally {
+
+      setUserLogin(false);
+    }
+  }
+  */
+
+
+  // userRegister
+  const [userRegistering, setUserRegistering] = useState(false);
+  const userRegister = async () => {
+    if (!memberid) {
+      toast.error('회원아이디를 입력해주세요');
+      return;
+    }
+    if (!userPassword) {
+      toast.error('비밀번호를 입력해주세요');
+      return;
+    }
+
+    if (!depositName) {
+      toast.error('입금자명을 입력해주세요');
+      return;
+    }
+
+    if (!depositBankName) {
+      toast.error('입금은행명을 입력해주세요');
+      return;
+    }
+
+    if (!depositBankAccountNumber) {
+      toast.error('입금계좌번호를 입력해주세요');
+      return;
+    }
+
+
+    const mobile = '010-1234-5678';
+
+
+
+    // check memberid is start alphabetic character and alphanumeric character only and length is 5 to 10
+    const memberidRegex = /^[a-zA-Z][a-zA-Z0-9]{4,9}$/;
+    if (!memberidRegex.test(memberid)) {
+      toast.error('회원아이디는 영문자로 시작하는 5~10자의 영문자와 숫자만 사용할 수 있습니다.');
+      return;
+    }
+
+
+
+    try {
+      setUserRegistering(true);
+      const response = await fetch('/api/user/setBuyerWithoutWalletAddressByStorecode', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+          {
+            clientid: params.clientid,
+            storecode: params.center,
+            
+            userCode: memberid,
+            password: userPassword,
+            mobile: mobile,
+  
+            userName: depositName,
+            userBankName: depositBankName,
+            userBankAccountNumber: depositBankAccountNumber,
+            userType: 'abc',
+          }
+        ),
+      });
+
+      if (!response) {
+        toast.error('회원가입 실패');
+        setUserRegistering(false);
+        return;
+      }
+
+      const data = await response?.json();
+
+      //console.log('userRegister data', data);
+
+      if (data.walletAddress) {
+        setAddress(data.walletAddress);
+
+        toast.success('회원가입 성공');
+        // router to paymaster
+        router.push('/' + params.lang + '/' + params.clientid + '/' + params.center + '/paymaster');
+
+      } else {
+        toast.error('회원가입 실패');
+      }
+    } catch (error) {
+      console.error('userRegister error', error);
+      toast.error('회원가입 실패');
+    } finally {
+      setUserRegistering(false);
+    }
+  }
+
+
+
+
+
   if (orderId !== '0') {
       
       return (
@@ -1657,49 +1801,6 @@ export default function Index({ params }: any) {
 
 
 
-  
-  const userLogin = async () => {
-    if (!memberid) {
-      toast.error('회원아이디를 입력해주세요');
-      return;
-    }
-    if (!userPassword) {
-      toast.error('비밀번호를 입력해주세요');
-      return;
-    }
-    const mobile = '010-1234-5678';
-
-    try {
-      setUserLogin(true);
-      const response = await fetch('/api/user/userLogin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          storecode: storecode,
-          nickname: nickname,
-          mobile: mobile,
-          password: userPassword,
-        }),
-      });
-      const data = await response?.json();
-      console.log('userLogin data', data);
-      if (data.walletAddress) {
-        setAddress(data.walletAddress);
-
-        toast.success('로그인 성공');
-      } else {
-        toast.error('로그인 실패');
-      }
-    } catch (error) {
-      console.error('userLogin error', error);
-      toast.error('로그인 실패');
-    } finally {
-
-      setUserLogin(false);
-    }
-  }
 
     
   return (
@@ -1918,6 +2019,15 @@ export default function Index({ params }: any) {
                 </div>
               </div>
 
+              {/* 제목: 회원가입 */}
+              <div className='w-full flex flex-col gap-2 items-center justify-start'>
+
+                <div className="text-2xl font-semibold text-zinc-500">
+                  P2P 거래소 회원가입
+                </div>
+
+              </div>
+
 
               {/* select one of krw amounts combo box */}
               {/* combo box */}
@@ -1931,23 +2041,11 @@ export default function Index({ params }: any) {
 
 
 
-                  {/* if nickname is not empty, login form */}
-                  {/* 아이디, 비밀번호 입력란, 로그인 버튼 */}
+
+                  {/* 아이디, 비밀번호 입력란, 회원가입 버튼 */}
                   {!loadingUser && !user && (
                     <div className='w-full flex flex-col gap-2 items-center justify-center'>
 
-                      <div className='flex flex-row gap-2 items-center justify-center'>
-                        <Image
-                          src="/icon-info.png"
-                          alt="Info"
-                          width={24}
-                          height={24}
-                          className='rounded-full'
-                        />
-                        <span className="text-sm text-green-800">
-                          USDT를 구매하기 위해서는 P2P 거래소에 로그인이 필요합니다.
-                        </span>
-                      </div>
 
                       <div className='mt-5 flex flex-col gap-2 items-center justify-center'>
                         <div className='flex flex-col gap-2 items-center justify-center'>
@@ -1981,25 +2079,86 @@ export default function Index({ params }: any) {
                             placeholder="비밀번호"
                             className="text-lg bg-zinc-200 text-zinc-500 px-4 py-2 rounded-md border border-zinc-100"
                           />
+
+
+                          {/*
+                                      depositName, // 입금자 이름
+                                      epositBankName, // 회원 입금은행
+                                      depositBankAccountNumber, // 회원 입금계좌번호
+                          */}
+                          <div className='flex flex-col gap-2 items-center justify-center mt-2'>
+                            <input
+                              type="text"
+                              value={depositName || ''}
+                              onChange={(e) => setDepositName(e.target.value)}
+                              placeholder="입금자 이름"
+                              className="text-lg bg-zinc-200 text-zinc-500 px-4 py-2 rounded-md border border-zinc-100"
+                            />
+                            {/* 입금은행 select box */}
+                            <select
+                              value={depositBankName || ''}
+                              onChange={(e) => setDepositBankName(e.target.value)}
+                              className="text-lg bg-zinc-200 text-zinc-500 px-4 py-2 rounded-md border border-zinc-100"
+                            >
+                              <option value="" disabled>
+                                회원 입금은행
+                              </option>
+                              <option value="카카오뱅크">카카오뱅크</option>
+                              <option value="케이뱅크">케이뱅크</option>
+                              <option value="토스뱅크">토스뱅크</option>
+                              <option value="국민은행">국민은행</option>
+                              <option value="우리은행">우리은행</option>
+                              <option value="신한은행">신한은행</option>
+                              <option value="농협">농협</option>
+                              <option value="기업은행">기업은행</option>
+                              <option value="하나은행">하나은행</option>
+                              <option value="외환은행">외환은행</option>
+                              <option value="부산은행">부산은행</option>
+                              <option value="대구은행">대구은행</option>
+                              <option value="전북은행">전북은행</option>
+                              <option value="경북은행">경북은행</option>
+                              <option value="광주은행">광주은행</option>
+                              <option value="수협">수협</option>
+                              <option value="신협">신협</option>
+                              <option value="씨티은행">씨티은행</option>
+                              <option value="대신은행">대신은행</option>
+                              <option value="동양종합금융">동양종합금융</option>
+                            </select>
+                            <input
+                              type="text"
+                              value={depositBankAccountNumber || ''}
+                              onChange={(e) => setDepositBankAccountNumber(e.target.value)}
+                              placeholder="회원 입금계좌번호"
+                              className="text-lg bg-zinc-200 text-zinc-500 px-4 py-2 rounded-md border border-zinc-100"
+                            />
+                          </div>
+
+
+
+
                         </div>
 
                         <button
                           onClick={() => {
-                            if (!memberid || !userPassword) {
+                            if (!memberid || !userPassword || !depositName || !depositBankName || !depositBankAccountNumber) {
                               toast.error('아이디와 비밀번호를 입력해주세요.');
                               return;
                             }
 
-                            userLogin(
+                            userRegister();
 
-                            );
                           } }
                           disabled={loadingStoreInfo
                             || !memberid
                             || !userPassword
-                            || userLogining
+                            || !depositName
+                            || !depositBankName
+                            || !depositBankAccountNumber
+                            || userRegistering
                           }
-                          className={`${loadingStoreInfo || !memberid || !userPassword || userLogining
+                          className={`${loadingStoreInfo || !memberid || !userPassword
+                            || !depositName || !depositBankName || !depositBankAccountNumber
+                            || userRegistering
                             ? 'bg-[#f472b6]'
                             : 'bg-black'
                             
@@ -2011,22 +2170,8 @@ export default function Index({ params }: any) {
                             `}
                         >
   
-                          로그인
-                        </button>
-                      </div>
-
-                      {/* 회원가입 안내 문구 */}
-                      <div className='mt-4 flex flex-row gap-2 items-center justify-center'>
-                        <span className="text-sm text-zinc-500">
-                          아직 P2P 거래소 회원이 아니신가요?
-                        </span>
-                        <button
-                          onClick={() => {
-                            router.push('/' + params.lang + '/' + params.clientid + '/' + params.center + '/register');
-                          }}
-                          className="text-sm underline text-zinc-500 hover:text-zinc-700"
-                        >
-                          회원가입하러 가기
+                          {userRegistering ? '회원가입 중...' : '회원가입'
+                          }
                         </button>
                       </div>
 

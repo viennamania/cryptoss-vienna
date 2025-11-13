@@ -70,7 +70,7 @@ import { parse } from 'path';
 
 
 
-
+import Script from 'next/script';
 
 
 
@@ -136,99 +136,6 @@ const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; //
 
 
 
-
-
-// [orderId].tsx
-
-//function SellUsdt(orderId: string) {
-
-
-/*
-export async function getStaticProps(context: any) {
-    const orderId = context.params.orderId;
-    return {
-      props: {
-        orderId,
-      },
-    };
-}
-
-
-export default function SellUsdt({ orderId }: InferGetStaticPropsType<typeof getStaticProps>) {
-*/
-
-///export default function SellUsdt() {
-
-
-
-//export default function SellUsdt({ params }: { params: { orderId: string } }) {
-
- 
- 
-/*
-// random deposit name
-// korean your name
-const randomDepositName = [
-  '김철수', 
-  '이영희',
-  '박영수',
-  '정미영',
-  '오재원',
-  '최지연',
-  '강민수',
-  '윤지원',
-  '서동훈',
-  '신미정',
-  '조영호',
-  '임지은',
-  '한상훈',
-  '황미정',
-  '백성호',
-  '전지은',
-  '고상훈',
-  '권미정',
-  '문성호',
-  '송지은',
-  '류상훈',
-  '안미정',
-  '손성호',
-  '홍지은',
-  '이상훈',
-  '김미정',
-  '박성호',
-  '이지은',
-  '최상훈',
-  '정미정',
-  '오성호',
-  '윤지은',
-];
-
-// random korea bank name
-const koreanBankName = [
-  '국민은행',
-  '신한은행',
-  '우리은행',
-  '하나은행',
-  '기업은행',
-  '농협은행',
-  '외환은행',
-  'SC제일은행',
-  '씨티은행',
-  '대구은행',
-  '부산은행',
-  '경남은행',
-  '광주은행',
-  '전북은행',
-  '제주은행',
-  '새마을금고',
-  '신협',
-  '우체국',
-  '카카오뱅크',
-  '케이뱅크',
-];
-
-*/
-  
  
 
 
@@ -267,24 +174,6 @@ export default function Index({ params }: any) {
     const paramDepositBankName = searchParams.get('depositBankName');
     const paramDepositBankAccountNumber = searchParams.get('depositBankAccountNumber');
     
-
-    
-
-    useEffect(() => {
-      // Dynamically load the Binance widget script
-      const script = document.createElement("script");
-      script.src = "https://public.bnbstatic.com/unpkg/growth-widget/cryptoCurrencyWidget@0.0.20.min.js";
-      script.async = true;
-      document.body.appendChild(script);
-  
-      return () => {
-        // Cleanup the script when the component unmounts
-        document.body.removeChild(script);
-      };
-    }, []);
-
-
-
 
 
 
@@ -673,11 +562,12 @@ export default function Index({ params }: any) {
 
 
 
-    
+    const [agentcode, setAgentcode] = useState<string>("");
+
 
     // fetch store info by storecode
     const [storeInfo, setStoreInfo] = useState<any>(null);
-    const [loadingStoreInfo, setLoadingStoreInfo] = useState(false);
+    const [loadingStoreInfo, setLoadingStoreInfo] = useState(true);
     useEffect(() => {
       const fetchStoreInfo = async () => {
         if (!storecode) {
@@ -691,6 +581,7 @@ export default function Index({ params }: any) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            clientid: params.clientid,
             storecode: storecode,
           }),
         });
@@ -703,17 +594,20 @@ export default function Index({ params }: any) {
   
         const data = await response?.json();
   
-        console.log('data', data);
+        //console.log('data', data);
   
         if (data.result) {
           setStoreInfo(data.result);
+
+          setAgentcode(data.result.agentcode);
+
         }
   
         setLoadingStoreInfo(false);
       };
   
       fetchStoreInfo();
-    }, [storecode]);
+    }, [params.clientid, storecode]);
 
     /*
     {
@@ -1470,6 +1364,7 @@ export default function Index({ params }: any) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        clientid: params.clientid,
         storecode: storecode,
         nickname: nickname,
         mobile: mobile,
@@ -1812,7 +1707,7 @@ export default function Index({ params }: any) {
     <main className="
       pl-2 pr-2
       pb-10 min-h-[100vh] flex flex-col items-center justify-start container
-      max-w-screen-lg
+      max-w-screen-sm
       mx-auto
       bg-zinc-50
       text-zinc-500
@@ -1821,15 +1716,10 @@ export default function Index({ params }: any) {
 
       <div className="
         h-32
-
         w-full flex flex-col gap-2 justify-center items-center
         p-4
-        bg-gradient-to-r from-[#f9a8d4] to-[#f472b6]
-        rounded-b-2xl
-        shadow-lg
-        shadow-[#f472b6]
-        border-b-2 border-[#f472b6]
-        border-opacity-50
+        bg-zinc-900
+        text-zinc-100
         ">
 
         {loadingStoreInfo ? (
@@ -1848,17 +1738,28 @@ export default function Index({ params }: any) {
         ) : (
           <div className="w-full flex flex-row items-center justify-between gap-2">
 
-            <div className='flex flex-col xl:flex-row gap-2 items-center justify-start'>
+            <div className='flex flex-col gap-2 items-center justify-start'>
               <Image
                 src={storeInfo?.storeLogo || '/logo.png'}
                 alt="Store Logo"
                 width={38}
                 height={38}
-                className='rounded-full w-10 h-10'
+                className='rounded-full w-10 h-10
+                bg-zinc-100
+                '
               />
+              {/* storeName */}
+              {/*
               <span className="text-sm text-zinc-100 font-semibold">
                 {storeInfo?.storeName}
               </span>
+              */}
+
+              {/* storeDescription */}
+              <span className="text-sm text-zinc-100">
+                {storeInfo?.storeDescription}
+              </span>
+
             </div>
 
             {loadingUser && (
@@ -1876,17 +1777,7 @@ export default function Index({ params }: any) {
               </div>
             )}
 
-            {!loadingUser && !user && (
-              <div className="flex flex-row items-center justify-center gap-2">
-                <span className="text-sm text-zinc-50">
-                  로그인을 해주세요.
-                </span>
-              </div>
-            )}
-
-            {/* user info */}
-
-            {!loadingUser &&  user && (
+            {!loadingUser && user && (
 
               <div className="flex flex-col items-start justify-center gap-2">
 
@@ -1943,25 +1834,20 @@ export default function Index({ params }: any) {
           </div>
         )}
 
-
       </div>
 
-      {/* USDT 가격 binance market price */}
-      <div
-        className="binance-widget-marquee
-        w-full flex flex-row items-center justify-center gap-2
-        p-2
-        "
+
+      {/*
+      include coinmarketcap widget
+      <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></script><div class="coinmarketcap-currency-widget" data-currencyid="825" data-base="KRW" data-secondary="" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-statsticker="true" data-stats="USD"></div>
+      */}
 
 
-        data-cmc-ids="1,1027,52,5426,3408,74,20947,5994,24478,13502,35336,825"
-        data-theme="dark"
-        data-transparent="true"
-        data-locale="ko"
-        data-fiat="KRW"
-        //data-powered-by="Powered by CrypToss"
-        //data-disclaimer="Disclaimer"
-      ></div>
+      <Script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></Script>
+
+      <div className='w-full mt-5 flex flex-row items-center justify-center'>
+        <div className="coinmarketcap-currency-widget" data-currencyid="825" data-base="KRW" data-secondary="" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-statsticker="true" data-stats="USD"></div>
+      </div>
 
 
 
@@ -2059,11 +1945,11 @@ export default function Index({ params }: any) {
                           className='rounded-full'
                         />
                         <span className="text-sm text-green-800">
-                          USDT를 구매하기 위해서는 로그인을 해야합니다.
+                          USDT를 구매하기 위해서는 P2P 거래소에 로그인이 필요합니다.
                         </span>
                       </div>
 
-                      <div className='mt-5 flex flex-col xl:flex-row gap-2 items-center justify-center'>
+                      <div className='mt-5 flex flex-col gap-2 items-center justify-center'>
                         <div className='flex flex-col gap-2 items-center justify-center'>
                           <span className="text-sm text-zinc-500">
                             아아디는 5-10자 영문, 숫자 조합으로 입력해주세요.
@@ -2129,6 +2015,21 @@ export default function Index({ params }: any) {
                         </button>
                       </div>
 
+                      {/* 회원가입 안내 문구 */}
+                      <div className='mt-4 flex flex-row gap-2 items-center justify-center'>
+                        <span className="text-sm text-zinc-500">
+                          아직 P2P 거래소 회원이 아니신가요?
+                        </span>
+                        <button
+                          onClick={() => {
+                            router.push('/' + params.lang + '/' + params.clientid + '/' + params.center + '/register');
+                          }}
+                          className="text-sm underline text-zinc-500 hover:text-zinc-700"
+                        >
+                          회원가입하러 가기
+                        </button>
+                      </div>
+
 
                     </div>
                   )}
@@ -2138,7 +2039,7 @@ export default function Index({ params }: any) {
 
 
 
-                <div className='mt-5 w-full flex flex-col gap-2 items-center justify-center
+                <div className='hidden mt-5 w-full flex-col gap-2 items-center justify-center
                   p-4
                   bg-zinc-50
                   rounded-2xl
@@ -2150,7 +2051,7 @@ export default function Index({ params }: any) {
 
                     {/* selected krw amount */}
 
-                    <div className='w-full flex flex-col xl:flex-row gap-5 items-center justify-center'>
+                    <div className='w-full flex flex-col gap-5 items-center justify-center'>
                       <div className="flex flex-row gap-2 items-center justify-center">
                           <span className="text-sm text-zinc-500">
                             구매금액

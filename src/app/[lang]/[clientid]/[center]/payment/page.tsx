@@ -1606,7 +1606,7 @@ export default function Index({ params }: any) {
 
           const data = await response?.json();
 
-          console.log('/api/order/requestPayment data====', data);
+          //console.log('/api/order/requestPayment data====', data);
 
 
           /*
@@ -1909,7 +1909,7 @@ export default function Index({ params }: any) {
 
     const data = await response?.json();
 
-    console.log('setUserWithoutWalletAddress data.walletAddress', data.walletAddress);
+    //console.log('setUserWithoutWalletAddress data.walletAddress', data.walletAddress);
 
     if (data.walletAddress) {
 
@@ -2315,15 +2315,8 @@ export default function Index({ params }: any) {
       text-zinc-500
       ">
 
-
-
-
-        
-
-
       <div className="
         h-32
-
         w-full flex flex-col gap-2 justify-center items-center
         p-4
         bg-zinc-900
@@ -2357,16 +2350,16 @@ export default function Index({ params }: any) {
                 '
               />
               {/* storeName */}
-              {/*
               <span className="text-sm text-zinc-100 font-semibold">
                 {storeInfo?.storeName}
               </span>
-              */}
 
               {/* storeDescription */}
+              {/*
               <span className="text-sm text-zinc-100">
                 {storeInfo?.storeDescription}
               </span>
+              */}
 
             </div>
 
@@ -2442,7 +2435,6 @@ export default function Index({ params }: any) {
           </div>
         )}
 
-
       </div>
 
 
@@ -2452,7 +2444,7 @@ export default function Index({ params }: any) {
       */}
 
 
-        <Script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></Script>
+      <Script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/currency.js"></Script>
 
       <div className='w-full mt-5 flex flex-row items-center justify-center'>
         <div className="coinmarketcap-currency-widget" data-currencyid="825" data-base="KRW" data-secondary="" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-statsticker="true" data-stats="USD"></div>

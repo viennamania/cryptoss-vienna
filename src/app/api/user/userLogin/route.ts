@@ -36,6 +36,8 @@ export async function POST(request: NextRequest) {
 
   const apiUrl = `${stableUrl}/api/user/checkUserByStorecodeAndNickname`;
 
+
+
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',

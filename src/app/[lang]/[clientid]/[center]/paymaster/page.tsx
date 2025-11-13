@@ -1679,16 +1679,43 @@ export default function Index({ params }: any) {
           clientid: params.clientid,
           storecode: params.center,
           memberid: memberid,
-          password: userPassword,
+          userPassword: userPassword,
         }),
       });
       const data = await response?.json();
-      console.log('userLogin data', data);
+      //console.log('userLogin data', data);
+      /*
+        result: {
+        _id: '68f050c47a83f5920ea388b2',
+        email: null,
+        nickname: 'test001',
+        walletAddress: '0xfF4238Df1fB9210c3709C828F94A6B9E3e5BD6D4',
+        createdAt: '2025-10-16T01:56:20.532Z',
+        buyer: {
+          depositBankAccountNumber: '6283467823',
+          depositBankName: '우체국',
+          depositName: '주성치'
+        }
+      }
+      */
 
-      if (data.walletAddress) {
-        setAddress(data.walletAddress);
+      if (data.result?.walletAddress) {
+        setAddress(data.result.walletAddress);
 
         toast.success('로그인 성공');
+
+        // /ko/95034cfeb204ef7777ecfe26c110a6ca/znrdexav/payment?storeUser=test003&depositBankName=국민은행&depositBankAccountNumber=937249878923&depositName=정진영&depositAmountKrw=0
+
+        // router to payment page
+        router.push('/' + params.lang + '/' + params.clientid + '/' + params.center
+          + '/payment?storeUser=' + memberid
+          + '&depositBankName=' + data.result.buyer.depositBankName
+          + '&depositBankAccountNumber=' + data.result.buyer.depositBankAccountNumber
+          + '&depositName=' + data.result.buyer.depositName
+          + '&depositAmountKrw=' + krwAmount
+        );
+
+
       } else {
         toast.error('로그인 실패');
       }

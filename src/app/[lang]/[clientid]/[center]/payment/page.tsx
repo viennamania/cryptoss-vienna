@@ -2898,6 +2898,7 @@ export default function Index({ params }: any) {
                                         selectedKrwAmount + 5000
                                       );
                                     } else {
+                                      setSelectedKrwAmount(maxKrwAmount);
                                       // Show an error message or handle the case when the limit is reached
                                       alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
                                     }
@@ -2927,6 +2928,7 @@ export default function Index({ params }: any) {
                                         selectedKrwAmount + 10000
                                       );
                                     } else {
+                                      setSelectedKrwAmount(maxKrwAmount);
                                       // Show an error message or handle the case when the limit is reached
                                       alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
                                     }
@@ -2953,6 +2955,7 @@ export default function Index({ params }: any) {
                                         selectedKrwAmount + 50000
                                       );
                                     } else {
+                                      setSelectedKrwAmount(maxKrwAmount);
                                       // Show an error message or handle the case when the limit is reached
                                       alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
                                     }
@@ -2979,6 +2982,7 @@ export default function Index({ params }: any) {
                                         selectedKrwAmount + 100000
                                       );
                                     } else {
+                                      setSelectedKrwAmount(maxKrwAmount);
                                       // Show an error message or handle the case when the limit is reached
                                       alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
                                     }
@@ -3005,6 +3009,7 @@ export default function Index({ params }: any) {
                                         selectedKrwAmount + 500000
                                       );
                                     } else {
+                                      setSelectedKrwAmount(maxKrwAmount);
                                       // Show an error message or handle the case when the limit is reached
                                       alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
                                     }
@@ -3031,6 +3036,7 @@ export default function Index({ params }: any) {
                                         selectedKrwAmount + 1000000
                                       );
                                     } else {
+                                      setSelectedKrwAmount(maxKrwAmount);
                                       // Show an error message or handle the case when the limit is reached
                                       alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
                                     }

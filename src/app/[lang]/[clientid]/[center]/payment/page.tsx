@@ -669,8 +669,8 @@ export default function Index({ params }: any) {
     const [agentcode, setAgentcode] = useState<string>("");
 
 
-    const [minKrwAmount, setMinKrwAmount] = useState(5000);
-    const [maxKrwAmount, setMaxKrwAmount] = useState(3000000);
+    const [minKrwAmount, setMinKrwAmount] = useState(0);
+    const [maxKrwAmount, setMaxKrwAmount] = useState(10000000);
 
     // fetch store info by storecode
     const [storeInfo, setStoreInfo] = useState<any>(null);
@@ -708,7 +708,9 @@ export default function Index({ params }: any) {
 
           setAgentcode(data.result.agentcode);
 
-          data.result?.minPaymentAmountKRW && setMinKrwAmount(data.result?.minPaymentAmountKRW);
+          //data.result?.minPaymentAmountKRW && setMinKrwAmount(data.result?.minPaymentAmountKRW);
+
+
           data.result?.maxPaymentAmountKRW && setMaxKrwAmount(data.result?.maxPaymentAmountKRW);
 
         }

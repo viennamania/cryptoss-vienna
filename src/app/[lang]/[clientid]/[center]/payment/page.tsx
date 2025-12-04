@@ -669,6 +669,9 @@ export default function Index({ params }: any) {
     const [agentcode, setAgentcode] = useState<string>("");
 
 
+    const [minKrwAmount, setMinKrwAmount] = useState(5000);
+    const [maxKrwAmount, setMaxKrwAmount] = useState(3000000);
+
     // fetch store info by storecode
     const [storeInfo, setStoreInfo] = useState<any>(null);
     const [loadingStoreInfo, setLoadingStoreInfo] = useState(true);
@@ -704,6 +707,9 @@ export default function Index({ params }: any) {
           setStoreInfo(data.result);
 
           setAgentcode(data.result.agentcode);
+
+          data.result?.minPaymentAmountKRW && setMinKrwAmount(data.result?.minPaymentAmountKRW);
+          data.result?.maxPaymentAmountKRW && setMaxKrwAmount(data.result?.maxPaymentAmountKRW);
 
         }
   
@@ -843,17 +849,29 @@ export default function Index({ params }: any) {
    const [krwAmounts, setKrwAmounts] = useState([10000, 50000, 100000, 300000, 500000, 1000000, 5000000, 10000000]);
    // select one of krw amount
 
+
+
    const [selectedKrwAmount, setSelectedKrwAmount] = useState(0);
 
 
    useEffect(() => {
       if (paramDepositAmountKrw) {
         setSelectedKrwAmount(Number(paramDepositAmountKrw));
+
+        // if paramDepositAmountKrw < minKrwAmount, then setSelectedKrwAmount(minKrwAmount)
+        if (Number(paramDepositAmountKrw) < minKrwAmount) {
+          setSelectedKrwAmount(minKrwAmount);
+        }
+
+        // if paramDepositAmountKrw > maxKrwAmount, then setSelectedKrwAmount(maxKrwAmount)
+        if (Number(paramDepositAmountKrw) > maxKrwAmount) {
+          setSelectedKrwAmount(maxKrwAmount);
+        }
+
       } else {
         setSelectedKrwAmount(0);
       }
-   }, [paramDepositAmountKrw]);
-
+   }, [paramDepositAmountKrw, minKrwAmount, maxKrwAmount]);
 
 
 
@@ -2756,6 +2774,33 @@ export default function Index({ params }: any) {
                             </span>
                           </div>
 
+
+                          {/* minKrwAmount maxKrwAmount */}
+                          <div className='flex flex-row gap-2 items-center justify-center'>
+                            <Image
+                              src="/icon-info.png"
+                              alt="Info"
+                              width={16}
+                              height={16}
+                              className="rounded-full w-4 h-4"
+                            />
+                            <span className="text-sm text-zinc-500">
+                              한번에 구매할 수 있는 최소 금액은 {
+                                minKrwAmount?.toLocaleString('ko-KR')
+                              } 원 이고
+                            </span>
+                            <span className="text-sm text-zinc-500">
+                              최대 금액은 {
+                                maxKrwAmount?.toLocaleString('ko-KR')
+                              } 원 입니다.
+                            </span>
+                          </div>
+
+
+
+
+
+
                           <div className="flex flex-col xl:flex-row gap-2 items-center justify-center
                             border-b-2 border-zinc-200 border-opacity-50
                             pb-2 mb-2
@@ -2841,9 +2886,24 @@ export default function Index({ params }: any) {
                                 {/* when mouse over, background color is green */}
 
                                 <button
-                                  onClick={() => setSelectedKrwAmount(
-                                    selectedKrwAmount + 5000
-                                  )}
+
+                                  onClick={() => {
+
+                                    if (selectedKrwAmount + 5000 < minKrwAmount) {
+                                      setSelectedKrwAmount(minKrwAmount);
+                                    }
+
+                                    if (selectedKrwAmount + 5000 <= maxKrwAmount) {
+                                      setSelectedKrwAmount(
+                                        selectedKrwAmount + 5000
+                                      );
+                                    } else {
+                                      // Show an error message or handle the case when the limit is reached
+                                      alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
+                                    }
+                                  }}
+
+
                                   className={`${loadingStoreInfo ? 'bg-zinc-800' : 'bg-green-500'
                                   }
                                     text-lg text-zinc-100
@@ -2857,9 +2917,21 @@ export default function Index({ params }: any) {
 
 
                                 <button
-                                  onClick={() => setSelectedKrwAmount(
-                                    selectedKrwAmount + 10000
-                                  )}
+
+                                  onClick={() => {
+                                    if (selectedKrwAmount + 10000 < minKrwAmount) {
+                                      setSelectedKrwAmount(minKrwAmount);
+                                    }
+                                    if (selectedKrwAmount + 10000 <= maxKrwAmount) {
+                                      setSelectedKrwAmount(
+                                        selectedKrwAmount + 10000
+                                      );
+                                    } else {
+                                      // Show an error message or handle the case when the limit is reached
+                                      alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
+                                    }
+                                  }}
+
                                   className={`${loadingStoreInfo ? 'bg-[#f472b6]' : 'bg-green-500'
                                   }
                                     text-lg text-zinc-100
@@ -2871,9 +2943,21 @@ export default function Index({ params }: any) {
                                 </button>
 
                                 <button
-                                  onClick={() => setSelectedKrwAmount(
-                                    selectedKrwAmount + 50000
-                                  )}
+                                  
+                                  onClick={() => {
+                                    if (selectedKrwAmount + 50000 < minKrwAmount) {
+                                      setSelectedKrwAmount(minKrwAmount);
+                                    }
+                                    if (selectedKrwAmount + 50000 <= maxKrwAmount) {
+                                      setSelectedKrwAmount(
+                                        selectedKrwAmount + 50000
+                                      );
+                                    } else {
+                                      // Show an error message or handle the case when the limit is reached
+                                      alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
+                                    }
+                                  }}
+
                                   className={`${loadingStoreInfo ? 'bg-[#f472b6]' : 'bg-green-500'
                                   }
                                     text-lg text-zinc-100
@@ -2885,9 +2969,21 @@ export default function Index({ params }: any) {
                                 </button>
 
                                 <button
-                                  onClick={() => setSelectedKrwAmount(
-                                    selectedKrwAmount + 100000
-                                  )}
+                                 
+                                  onClick={() => {
+                                    if (selectedKrwAmount + 100000 < minKrwAmount) {
+                                      setSelectedKrwAmount(minKrwAmount);
+                                    }
+                                    if (selectedKrwAmount + 100000 <= maxKrwAmount) {
+                                      setSelectedKrwAmount(
+                                        selectedKrwAmount + 100000
+                                      );
+                                    } else {
+                                      // Show an error message or handle the case when the limit is reached
+                                      alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
+                                    }
+                                  }}
+
                                   className={`${loadingStoreInfo ? 'bg-[#f472b6]' : 'bg-green-500'
                                   }
                                     text-lg text-zinc-100
@@ -2899,9 +2995,21 @@ export default function Index({ params }: any) {
                                 </button>
 
                                 <button
-                                  onClick={() => setSelectedKrwAmount(
-                                    selectedKrwAmount + 500000
-                                  )}
+                                
+                                  onClick={() => {
+                                    if (selectedKrwAmount + 500000 < minKrwAmount) {
+                                      setSelectedKrwAmount(minKrwAmount);
+                                    }
+                                    if (selectedKrwAmount + 500000 <= maxKrwAmount) {
+                                      setSelectedKrwAmount(
+                                        selectedKrwAmount + 500000
+                                      );
+                                    } else {
+                                      // Show an error message or handle the case when the limit is reached
+                                      alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
+                                    }
+                                  }}
+
                                   className={`${loadingStoreInfo ? 'bg-[#f472b6]' : 'bg-green-500'
                                   }
                                     text-lg text-zinc-100
@@ -2913,9 +3021,21 @@ export default function Index({ params }: any) {
                                 </button>
 
                                 <button
-                                  onClick={() => setSelectedKrwAmount(
-                                    selectedKrwAmount + 1000000
-                                  )}
+                                  
+                                  onClick={() => {
+                                    if (selectedKrwAmount + 1000000 < minKrwAmount) {
+                                      setSelectedKrwAmount(minKrwAmount);
+                                    }
+                                    if (selectedKrwAmount + 1000000 <= maxKrwAmount) {
+                                      setSelectedKrwAmount(
+                                        selectedKrwAmount + 1000000
+                                      );
+                                    } else {
+                                      // Show an error message or handle the case when the limit is reached
+                                      alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
+                                    }
+                                  }}
+
                                   className={`${loadingStoreInfo ? 'bg-[#f472b6]' : 'bg-green-500'
                                   }
                                     text-lg text-zinc-100

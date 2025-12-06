@@ -708,7 +708,7 @@ export default function Index({ params }: any) {
 
           setAgentcode(data.result.agentcode);
 
-          //data.result?.minPaymentAmountKRW && setMinKrwAmount(data.result?.minPaymentAmountKRW);
+          data.result?.minPaymentAmountKRW && setMinKrwAmount(data.result?.minPaymentAmountKRW);
 
 
           data.result?.maxPaymentAmountKRW && setMaxKrwAmount(data.result?.maxPaymentAmountKRW);
@@ -2822,7 +2822,10 @@ export default function Index({ params }: any) {
                                 {(!depositAmountKrw || depositAmountKrw === "0") && (
 
                                   <button
-                                    onClick={() => setSelectedKrwAmount(0)}
+                                    onClick={() => setSelectedKrwAmount(
+                                      minKrwAmount
+                                    )}
+                                    
                                     className={`${loadingStoreInfo ? 'bg-[#f472b6]' : 'bg-green-500'
                                       }
                                       text-sm text-zinc-100

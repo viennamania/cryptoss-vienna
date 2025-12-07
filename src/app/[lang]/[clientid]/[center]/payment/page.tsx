@@ -2823,9 +2823,10 @@ export default function Index({ params }: any) {
 
                                   <button
                                     onClick={() => setSelectedKrwAmount(
-                                      minKrwAmount
+                                      //minKrwAmount
+                                      0
                                     )}
-                                    
+
                                     className={`${loadingStoreInfo ? 'bg-[#f472b6]' : 'bg-green-500'
                                       }
                                       text-sm text-zinc-100
@@ -3126,70 +3127,103 @@ export default function Index({ params }: any) {
                             
 
 
+                            <div className="w-full flex flex-col gap-2 items-center justify-center">
+                              <button
+                                disabled={
+                                  !address
+                                  || !user
+                                  || !selectedKrwAmount
+                                  || acceptingSellOrderRandom
+                                  || !userAgreementChecked
+                                  || selectedKrwAmount < minKrwAmount
+                                  || selectedKrwAmount > maxKrwAmount
+                                }
+                                className={`
+                                ${!user
+                                || !selectedKrwAmount
+                                || acceptingSellOrderRandom
+                                || !userAgreementChecked
+                                || selectedKrwAmount < minKrwAmount
+                                || selectedKrwAmount > maxKrwAmount
+                                ? 'bg-zinc-200' : 'bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-50'}
+                                  w-full
+                                  text-lg
+                                  font-semibold
+                                  px-4 py-2 rounded-md border border-zinc-100
+                                  `}
 
-                            <button
-                              disabled={!address || !user || !selectedKrwAmount || acceptingSellOrderRandom || !userAgreementChecked}
-                              className={`
-                              ${!user || !selectedKrwAmount || acceptingSellOrderRandom || !userAgreementChecked ? 'bg-zinc-200' : 'bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-50'}
-                                w-full
-                                text-lg
-                                font-semibold
-                                px-4 py-2 rounded-md border border-zinc-100
-                                `}
+                                onClick={() => {
 
-                              onClick={() => {
+                                    // check deposit name is empty
+                                    if (!depositName) {
+                                      toast.error(Please_enter_deposit_name);
+                                      return;
+                                    }
 
-                                  // check deposit name is empty
-                                  if (!depositName) {
-                                    toast.error(Please_enter_deposit_name);
-                                    return;
-                                  }
-
-                                  acceptSellOrderRandom(
-                                    selectedKrwAmount,
-                                    depositName,
-                                    depositBankName || '',
-                                    depositBankAccountNumber || ''
-                                  );
-                            
-
-                              }}
-                            >
-                              <div className="flex flex-row items-center justify-center gap-2">
-                                {/* loaaing icon */}
-                                {acceptingSellOrderRandom ? (
-                                  <Image
-                                    src="/loading.png"
-                                    alt="Loading"
-                                    width={24}
-                                    height={24}
-                                    className='animate-spin'
-                                  />
-                                ) : (
-                                  <Image
-                                    src="/icon-buy.webp"
-                                    alt="Check"
-                                    width={24}
-                                    height={24}
-                                  />
-                                )}
+                                    acceptSellOrderRandom(
+                                      selectedKrwAmount,
+                                      depositName,
+                                      depositBankName || '',
+                                      depositBankAccountNumber || ''
+                                    );
                               
+
+                                }}
+                              >
                                 <div className="flex flex-row items-center justify-center gap-2">
+                                  {/* loaaing icon */}
                                   {acceptingSellOrderRandom ? (
-                                    <span className="text-sm text-zinc-400">
-                                      {/* 구매주문 중입니다. */}
-                                      구매주문 중입니다.
-                                    </span>
+                                    <Image
+                                      src="/loading.png"
+                                      alt="Loading"
+                                      width={24}
+                                      height={24}
+                                      className='animate-spin'
+                                    />
                                   ) : (
-                                    <span className="text-sm text-zinc-100">
-                                      구매하기
-                                    </span>
+                                    <Image
+                                      src="/icon-buy.webp"
+                                      alt="Check"
+                                      width={24}
+                                      height={24}
+                                    />
                                   )}
+                                
+                                  <div className="flex flex-row items-center justify-center gap-2">
+                                    {acceptingSellOrderRandom ? (
+                                      <span className="text-sm text-zinc-400">
+                                        {/* 구매주문 중입니다. */}
+                                        구매주문 중입니다.
+                                      </span>
+                                    ) : (
+                                      <span className={"text-sm text-zinc-100"}>
+                                        구매하기
+                                      </span>
+                                    )}
+                                  </div>
+
                                 </div>
 
-                              </div>
+                              </button>
 
-                            </button>
+                              {/* selectedKrwAmount < minKrwAmount show error message */}
+                              {selectedKrwAmount < minKrwAmount && (
+                                <div className="text-sm text-red-500 mt-2">
+                                  최소 구매 금액은 {
+                                  minKrwAmount?.toLocaleString('ko-KR')
+                                  }원입니다.
+                                </div>
+                              )}
+                              {/* selectedKrwAmount > maxKrwAmount show error message */}
+                              {selectedKrwAmount > maxKrwAmount && (
+                                <div className="text-sm text-red-500 mt-2">
+                                  최대 구매 금액은 {
+                                  maxKrwAmount?.toLocaleString('ko-KR')
+                                  }원입니다.
+                                </div>
+                              )}
+
+                            </div>
 
                           </div>
 

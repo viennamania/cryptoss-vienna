@@ -2697,7 +2697,7 @@ export default function Index({ params }: any) {
                   {/* select one of krw amounts combo box */}
                   {/* combo box */}
 
-                  {/* 10000, 50000, 100000, 300000, 500000, 1000000, 5000000, 10000000 */}
+                  {/* 1000, 5000, 100000, 300000, 500000, 1000000, 5000000, 10000000 */}
 
                   {orderId === '0' && (
 
@@ -2890,6 +2890,38 @@ export default function Index({ params }: any) {
 
 
                                 {/* when mouse over, background color is green */}
+
+
+                                {/* 5000 */}
+                                <button
+
+                                  onClick={() => {
+                                    if (selectedKrwAmount + 1000 < minKrwAmount) {
+                                      setSelectedKrwAmount(minKrwAmount);
+                                    }
+                                    if (selectedKrwAmount + 1000 <= maxKrwAmount) {
+                                      setSelectedKrwAmount(
+                                        selectedKrwAmount + 1000
+                                      );
+                                    } else {
+                                      setSelectedKrwAmount(maxKrwAmount);
+                                      // Show an error message or handle the case when the limit is reached
+                                      alert(`한번에 구매할 수 있는 최대 금액은 ${maxKrwAmount?.toLocaleString('ko-KR')}원 입니다.`);
+                                    }
+                                  }}
+
+
+                                  className={`${loadingStoreInfo ? 'bg-zinc-800' : 'bg-green-500'
+                                  }
+                                    text-lg text-zinc-100
+                                    px-4 py-2 rounded-md border border-zinc-100
+                                    hover:bg-[#f472b6] hover:text-zinc-50
+                                    `}
+                                  disabled={loadingStoreInfo}
+                                >
+                                  1,000원
+                                </button>
+
 
                                 <button
 
